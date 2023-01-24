@@ -1,4 +1,9 @@
 # Jarvis
-## Swift UI for the Jarvis Barbot
+## A Swift UI for the Jarvis Barbot
 
 ----
+### Usage
+### Requirements
+### Install
+### Getting Started
+### Contact Us
