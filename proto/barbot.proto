@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+
+// The BarBot service definition.
+service Barbot {
+  // Sends a drink order
+  rpc PlaceOrder (OrderRequest) returns (OrderReply) {}
+
+}
+
+// The request message containing the user's name.
+message OrderRequest {
+  string user_id = 1;
+  int32  drink_num = 2;
+}
+
+// The response message containing the drink made ack
+message OrderReply {
+  string ack = 1;
+}
