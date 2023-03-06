@@ -6,7 +6,7 @@ import grpc
 import barbot_pb2_grpc
 import barbot_pb2
 
-creds_path = '../../../certs/server-cert.pem'
+creds_path = '../../certs/server-cert.pem'
 
 def run():
     print("Will try to place order ...")

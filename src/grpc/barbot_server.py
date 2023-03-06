@@ -6,8 +6,8 @@ import barbot_pb2_grpc
 import barbot_pb2
 import hello
 
-private_key_path = "../../../certs/server-key.pem"
-certificate_path = "../../../certs/server-cert.pem"
+private_key_path = "../../certs/server-key.pem"
+certificate_path = "../../certs/server-cert.pem"
 
 class Barbot(barbot_pb2_grpc.BarbotServicer):
 
