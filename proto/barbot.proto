@@ -5,16 +5,58 @@ syntax = "proto3";
 service Barbot {
   // Sends a drink order
   rpc PlaceOrder (OrderRequest) returns (OrderReply) {}
-
+  rpc InjectFlavor (FlavorRequest) returns (FlavorReply) {}
+  rpc QueryLevels (LevelRequest) returns (LevelReply) {}
 }
 
-// The request message containing the user's name.
+// The request message to make a drink containing the
+// 1. user_id: Identify the user
+// 2. drink_name: The drink the user orders
+// 3. drink_id: The drink id that the user orders
+// 4. stirring: whether the drink should be stirred
 message OrderRequest {
   string user_id = 1;
-  int32  drink_num = 2;
+  string drink_name = 2;
+  int32 drink_id = 3;
+  bool   stirring = 4;
 }
 
-// The response message containing the drink made ack
+// The response message upon successful creation
+// 1. user_id: User that placed the order
+// 2. drink_name: The drink that was requested
 message OrderReply {
-  string ack = 1;
+  string user_id = 1;
+  string drink_name = 2;
+}
+
+// The request message to inject a flavor
+// 1. user_id: Identify the user
+// 2. flavor_name: The flavor the user orders
+// 3. flavor_id: ID for processing
+message FlavorRequest {
+  string user_id = 1;
+  string flavor_name = 2;
+  int32  flavor_id = 3;
+}
+
+// The response message upon successful injection
+// 1. user_id: User that placed the order
+// 2. flavor_name: The flavor that was requested
+message FlavorReply {
+  string user_id = 1;
+  string flavor_name = 2;
+}
+
+// The request message to query the level
+// 1. container_id: The id that is the container
+message LevelRequest {
+  int32 container_id = 1;
+}
+
+// The response message to query the level
+// 1. container_id: The id that is the container
+// 2. container_level: The level that is available
+message LevelReply {
+  int32 container_id = 1;
+  double container_level = 2;
 }

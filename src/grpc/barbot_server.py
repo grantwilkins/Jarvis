@@ -24,7 +24,7 @@ def serve():
     with open(certificate_path, 'rb') as f:
         certificate_chain = f.read()
     server_credentials = grpc.ssl_server_credentials( ( (private_key, certificate_chain), ) )
-    server.add_secure_port('[::]:' + port, server_credentials)
+    server.add_insecure_port('0.0.0.0:' + port)
     server.start()
     print("Server started, listening on " + port)
     server.wait_for_termination()
