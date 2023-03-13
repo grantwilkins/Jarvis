@@ -20,6 +20,16 @@ class BarbotStub(object):
                 request_serializer=barbot__pb2.OrderRequest.SerializeToString,
                 response_deserializer=barbot__pb2.OrderReply.FromString,
                 )
+        self.InjectFlavor = channel.unary_unary(
+                '/Barbot/InjectFlavor',
+                request_serializer=barbot__pb2.FlavorRequest.SerializeToString,
+                response_deserializer=barbot__pb2.FlavorReply.FromString,
+                )
+        self.QueryLevels = channel.unary_unary(
+                '/Barbot/QueryLevels',
+                request_serializer=barbot__pb2.LevelRequest.SerializeToString,
+                response_deserializer=barbot__pb2.LevelReply.FromString,
+                )
 
 
 class BarbotServicer(object):
@@ -33,6 +43,18 @@ class BarbotServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def InjectFlavor(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def QueryLevels(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_BarbotServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -40,6 +62,16 @@ def add_BarbotServicer_to_server(servicer, server):
                     servicer.PlaceOrder,
                     request_deserializer=barbot__pb2.OrderRequest.FromString,
                     response_serializer=barbot__pb2.OrderReply.SerializeToString,
+            ),
+            'InjectFlavor': grpc.unary_unary_rpc_method_handler(
+                    servicer.InjectFlavor,
+                    request_deserializer=barbot__pb2.FlavorRequest.FromString,
+                    response_serializer=barbot__pb2.FlavorReply.SerializeToString,
+            ),
+            'QueryLevels': grpc.unary_unary_rpc_method_handler(
+                    servicer.QueryLevels,
+                    request_deserializer=barbot__pb2.LevelRequest.FromString,
+                    response_serializer=barbot__pb2.LevelReply.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -66,5 +98,39 @@ class Barbot(object):
         return grpc.experimental.unary_unary(request, target, '/Barbot/PlaceOrder',
             barbot__pb2.OrderRequest.SerializeToString,
             barbot__pb2.OrderReply.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def InjectFlavor(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/Barbot/InjectFlavor',
+            barbot__pb2.FlavorRequest.SerializeToString,
+            barbot__pb2.FlavorReply.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def QueryLevels(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/Barbot/QueryLevels',
+            barbot__pb2.LevelRequest.SerializeToString,
+            barbot__pb2.LevelReply.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
