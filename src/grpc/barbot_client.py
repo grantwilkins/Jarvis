@@ -6,18 +6,37 @@ import grpc
 import barbot_pb2_grpc
 import barbot_pb2
 
-creds_path = '../../../certs/server-cert.pem'
+IP_ADDR = '0.0.0.0'
+PORT = '50051'
 
-def run():
+def place_order(user_id, drink_name, drink_id, stirring):
     print("Will try to place order ...")
-    with open(creds_path, 'rb') as f:
-        creds = grpc.ssl_channel_credentials(f.read())
-    with grpc.secure_channel('localhost:50051', creds) as channel:
+    with grpc.insecure_channel(IP_ADDR + ':' + PORT) as channel:
         stub = barbot_pb2_grpc.BarbotStub(channel)
-        response = stub.PlaceOrder(barbot_pb2.OrderRequest(user_id='gfwilki@clemson.edu', drink_num=3))
-    print("Client ack received: " + response.ack)
+        response = stub.PlaceOrder(barbot_pb2.OrderRequest(
+            user_id    = user_id, 
+            drink_name = drink_name,
+            drink_id   = drink_id,
+            stirring   = stirring))
+    print("Client ack received: " + response.user_id + " ordered " + response.drink_name)
+
+def inject_flavor(user_id, flavor_name, flavor_id):
+    print("Will try to place order ...")
+    with grpc.insecure_channel(IP_ADDR + ':' + PORT) as channel:
+        stub = barbot_pb2_grpc.BarbotStub(channel)
+        response = stub.InjectFlavor(barbot_pb2.FlavorRequest(
+            user_id    = user_id, 
+            flavor_name = flavor_name,
+            flavor_id   = flavor_id))
+    print("Client ack received: " + response.user_id + " ordered " + response.flavor_name)
+
+def query_levels():
+    print("Will try to query levels ...")
+    with grpc.insecure_channel(IP_ADDR + ':' + PORT) as channel:
+        stub = barbot_pb2_grpc.BarbotStub(channel)
+        response = stub.QueryLevels(barbot_pb2.LevelRequest())
+    print("Client ack received: " + response.user_id + " ordered " + response.drink_name)
 
 
 if __name__ == '__main__':
     logging.basicConfig()
-    run()

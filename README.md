@@ -1,5 +1,5 @@
 # Jarvis
-## A Swift UI for the Jarvis Barbot
+## API for Jarvis Barbot
 
 ----
 ### Usage

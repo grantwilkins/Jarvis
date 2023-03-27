@@ -13,7 +13,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0c\x62\x61rbot.proto\"2\n\x0cOrderRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\x11\n\tdrink_num\x18\x02 \x01(\x05\"\x19\n\nOrderReply\x12\x0b\n\x03\x61\x63k\x18\x01 \x01(\t24\n\x06\x42\x61rbot\x12*\n\nPlaceOrder\x12\r.OrderRequest\x1a\x0b.OrderReply\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0c\x62\x61rbot.proto\"W\n\x0cOrderRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\x12\n\ndrink_name\x18\x02 \x01(\t\x12\x10\n\x08\x64rink_id\x18\x03 \x01(\x05\x12\x10\n\x08stirring\x18\x04 \x01(\x08\"1\n\nOrderReply\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\x12\n\ndrink_name\x18\x02 \x01(\t\"H\n\rFlavorRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\x13\n\x0b\x66lavor_name\x18\x02 \x01(\t\x12\x11\n\tflavor_id\x18\x03 \x01(\x05\"3\n\x0b\x46lavorReply\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\x13\n\x0b\x66lavor_name\x18\x02 \x01(\t\"$\n\x0cLevelRequest\x12\x14\n\x0c\x63ontainer_id\x18\x01 \x01(\x05\";\n\nLevelReply\x12\x14\n\x0c\x63ontainer_id\x18\x01 \x01(\x05\x12\x17\n\x0f\x63ontainer_level\x18\x02 \x01(\x01\x32\x91\x01\n\x06\x42\x61rbot\x12*\n\nPlaceOrder\x12\r.OrderRequest\x1a\x0b.OrderReply\"\x00\x12.\n\x0cInjectFlavor\x12\x0e.FlavorRequest\x1a\x0c.FlavorReply\"\x00\x12+\n\x0bQueryLevels\x12\r.LevelRequest\x1a\x0b.LevelReply\"\x00\x62\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'barbot_pb2', globals())
@@ -21,9 +21,17 @@ if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
   _ORDERREQUEST._serialized_start=16
-  _ORDERREQUEST._serialized_end=66
-  _ORDERREPLY._serialized_start=68
-  _ORDERREPLY._serialized_end=93
-  _BARBOT._serialized_start=95
-  _BARBOT._serialized_end=147
+  _ORDERREQUEST._serialized_end=103
+  _ORDERREPLY._serialized_start=105
+  _ORDERREPLY._serialized_end=154
+  _FLAVORREQUEST._serialized_start=156
+  _FLAVORREQUEST._serialized_end=228
+  _FLAVORREPLY._serialized_start=230
+  _FLAVORREPLY._serialized_end=281
+  _LEVELREQUEST._serialized_start=283
+  _LEVELREQUEST._serialized_end=319
+  _LEVELREPLY._serialized_start=321
+  _LEVELREPLY._serialized_end=380
+  _BARBOT._serialized_start=383
+  _BARBOT._serialized_end=528
 # @@protoc_insertion_point(module_scope)
