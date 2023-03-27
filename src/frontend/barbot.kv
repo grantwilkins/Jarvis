@@ -1,0 +1,137 @@
+#:import FadeTransition kivy.uix.screenmanager.FadeTransition
+
+
+<HomeScreen>:  
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            text: 'BarBot'
+            font_size: 64
+            font: 'bold'
+            color: 0.92, 0.45, 0
+            
+        MDRaisedButton:
+            text: "Drink Menu"
+            pos_hint: {"center_x":.5, "center_y":.5 }
+            on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "menu"
+
+        
+        MDRaisedButton:
+            text: "Admin"
+            pos: 50, 50
+            #pos_hint: {"center_x":.75, "center_y":.5 }
+            on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "admin"
+
+
+<DrinkMenu>:
+    StackLayout:
+        # Button:
+        #     background_normal: 'martini.png' 
+        #     size_hint: .5, .5
+        #     keep_ratio: False
+        #     allow_stretch: True
+
+        # Button:
+        #     background_normal: 'gintonic.png' 
+        #     size_hint: .5, .5
+        #     keep_ratio: False
+        #     allow_stretch: True
+
+
+
+<AdminMenu>:
+    FloatLayout:
+        TextInput:
+            id: c1
+            size_hint: .5, .05
+            pos_hint: {"center_x":.5, "center_y": 0.94}
+            spacing: 0
+
+
+        Label:
+            text: 'Container 1'
+            font_size: 20
+            font: 'bold'
+            color: 1, 0.45, 0
+            pos_hint: {"center_x":.5, "center_y": 0.89}
+
+
+        TextInput:
+            id: c2
+            size_hint: .5, .05
+            pos_hint: {"center_x":.5, "center_y": 0.78}
+            
+        Label:
+            text: 'Container 2'
+            font_size: 20
+            font: 'bold'
+            color: 1, 0.45, 0
+            pos_hint: {"center_x":.5, "center_y": 0.73}
+
+
+        TextInput:
+            id: c3
+            size_hint: .5, .05
+            pos_hint: {"center_x":.5, "center_y": 0.62}
+
+        Label:
+            text: 'Container 3'
+            font_size: 20
+            font: 'bold'
+            color: 1, 0.45, 0  
+            pos_hint: {"center_x":.5, "center_y": 0.57}
+
+
+            
+        TextInput:
+            id: c4
+            size_hint: .5, .05
+            pos_hint: {"center_x":.5, "center_y": 0.46}
+
+        
+        Label:
+            text: 'Container 4'
+            font_size: 20
+            font: 'bold'
+            color: 1, 0.45, 0  
+            pos_hint: {"center_x":.5, "center_y": 0.41}
+
+
+        TextInput:
+            id: c5
+            size_hint: .5, .05
+            pos_hint: {"center_x":.5, "center_y": 0.3}
+
+        
+        Label:
+            text: 'Container 5'
+            font_size: 20
+            font: 'bold'
+            color: 1, 0.45, 0  
+            pos_hint: {"center_x":.5, "center_y": 0.25}
+
+
+        TextInput:
+            id: c6
+            size_hint: .5, .05
+            pos_hint: {"center_x":.5, "center_y": 0.14}
+
+        
+        Label:
+            text: 'Container 6'
+            font_size: 20
+            font: 'bold'
+            color: 1, 0.45, 0  
+            pos_hint: {"center_x":.5, "center_y": 0.09}
+
+
+
+        MDRaisedButton:
+            text: "Submit"
+            pos_hint: {"center_x":.75, "center_y":.05 }
+            on_press: root.submit(); app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "home"
+            #on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "home"
+
+
+
+
