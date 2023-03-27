@@ -9,10 +9,6 @@ import barbot_pb2
 IP_ADDR = '0.0.0.0'
 PORT = '50051'
 
-'''
-Reformat this code to be a class
-'''
-
 def place_order(user_id, drink_name, drink_id, stirring):
     print("Will try to place order ...")
     with grpc.insecure_channel(IP_ADDR + ':' + PORT) as channel:
