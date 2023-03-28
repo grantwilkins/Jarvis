@@ -45,13 +45,15 @@ class OrderReply(_message.Message):
     def __init__(self, user_id: _Optional[str] = ..., drink_name: _Optional[str] = ...) -> None: ...
 
 class OrderRequest(_message.Message):
-    __slots__ = ["drink_id", "drink_name", "stirring", "user_id"]
-    DRINK_ID_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ["amount_oz", "container_num", "drink_name", "stirring", "user_id"]
+    AMOUNT_OZ_FIELD_NUMBER: _ClassVar[int]
+    CONTAINER_NUM_FIELD_NUMBER: _ClassVar[int]
     DRINK_NAME_FIELD_NUMBER: _ClassVar[int]
     STIRRING_FIELD_NUMBER: _ClassVar[int]
     USER_ID_FIELD_NUMBER: _ClassVar[int]
-    drink_id: int
+    amount_oz: float
+    container_num: int
     drink_name: str
     stirring: bool
     user_id: str
-    def __init__(self, user_id: _Optional[str] = ..., drink_name: _Optional[str] = ..., drink_id: _Optional[int] = ..., stirring: bool = ...) -> None: ...
+    def __init__(self, user_id: _Optional[str] = ..., drink_name: _Optional[str] = ..., container_num: _Optional[int] = ..., amount_oz: _Optional[float] = ..., stirring: bool = ...) -> None: ...

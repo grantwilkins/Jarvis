@@ -1,4 +1,4 @@
-OUTPUT=/Users/grantwilkins/Jarvis/src/grpc/
+OUTPUT=/Users/grantwilkins/Jarvis/src/
 
 
 all: barbot

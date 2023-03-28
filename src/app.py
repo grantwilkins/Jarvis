@@ -9,13 +9,18 @@ from kivy.uix.button import Button
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 from kivy.lang import Builder
 from kivy.uix.textinput import TextInput
-
+import container as c
+import barbot_client as bbc
 kivy.require('1.9.0')
 
+
+FULL_OZ_CONTAINER = 100
 
 # CHANGE
 df = pd.read_csv("drinkRecipes3.csv")
 df.set_index('Drink Name', inplace=True)
+
+CONTAINERS = []
 
 
 class HomeScreen(Screen):
@@ -25,8 +30,25 @@ class DrinkMenu(Screen):
 
     def order_function(self, instance):
         ### insert GRPC call!
-        data = df.loc[[instance.text]].iloc[i_containers]
-        print(data)
+        drink_row = df.loc[[instance.text]]
+        names_of_drinks = list(drink_row.columns)
+        [values_from_drink] = drink_row.values.tolist()
+        ingredient_tuples = []
+        for idx, amount in enumerate(values_from_drink):
+            if amount != 0:
+                ingredient_tuples.append((names_of_drinks[idx], amount))
+        print(ingredient_tuples)
+        for ingredient, amount in ingredient_tuples:
+            for container in BarBot.set_containers:
+                if container.get_ingredient_name() == ingredient:
+                    container.decrease_level(amount)
+                    print(container)
+                    bbc.place_order(user_id = "test@hotmail.com", 
+                                drink_name = container.get_ingredient_name(), 
+                                container_num = container.get_container_num(), 
+                                amount_oz=amount, 
+                                stirring=1)    
+        print(instance.text)
 
     def on_pre_enter(self):
 
@@ -51,7 +73,12 @@ class AdminMenu(Screen):
 
         ## search for drinks that can be made
         containers = [self.ids.c1.text, self.ids.c2.text, self.ids.c3.text, self.ids.c4.text, self.ids.c5.text, self.ids.c6.text]
-     
+
+        # Create container objects for all inputs
+        for idx, container_name in enumerate(containers):
+            if container_name != '':
+                BarBot.set_containers.append(c.Container(container_name, FULL_OZ_CONTAINER, idx))
+
         i = 0
         i_containers = []
         for col in df.columns:
@@ -76,10 +103,6 @@ class AdminMenu(Screen):
                 BarBot.drinks.append(drink)
 
 
-    
-
-
-
 class UI(ScreenManager):
     def __init__(self): 
         super(UI, self).__init__()
@@ -88,13 +111,11 @@ class UI(ScreenManager):
         self.add_widget(AdminMenu(name="admin"))
         
 
-
-
-
 class BarBot(MDApp):
     
     def build(self):
         BarBot.drinks = ['Margarita', 'Gin and Tonic', 'Vodka Cranberry', 'Old Fashioned', 'Tequila Sunrise']
+        BarBot.set_containers = []
         return UI()
 
 

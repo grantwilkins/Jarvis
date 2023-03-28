@@ -17,8 +17,9 @@ service Barbot {
 message OrderRequest {
   string user_id = 1;
   string drink_name = 2;
-  int32 drink_id = 3;
-  bool   stirring = 4;
+  int32  container_num = 3;
+  double amount_oz = 4;
+  bool   stirring = 5;
 }
 
 // The response message upon successful creation
