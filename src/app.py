@@ -34,6 +34,7 @@ class DrinkMenu(Screen):
         names_of_drinks = list(drink_row.columns)
         [values_from_drink] = drink_row.values.tolist()
         ingredient_tuples = []
+        total_oz = 0;
         for idx, amount in enumerate(values_from_drink):
             if amount != 0:
                 ingredient_tuples.append((names_of_drinks[idx], amount))
@@ -42,12 +43,22 @@ class DrinkMenu(Screen):
             for container in BarBot.set_containers:
                 if container.get_ingredient_name() == ingredient:
                     container.decrease_level(amount)
-                    print(container)
+                    total_oz += amount
                     bbc.place_order(user_id = "test@hotmail.com", 
                                 drink_name = container.get_ingredient_name(), 
                                 container_num = container.get_container_num(), 
                                 amount_oz=amount, 
                                 stirring=1)    
+        bbc.place_order(user_id = "test@hotmail.com", 
+                    drink_name = "Stirring", 
+                    container_num = 7, 
+                    amount_oz=3, 
+                    stirring=1)  
+        bbc.place_order(user_id = "test@hotmail.com", 
+                    drink_name = "Pump Out", 
+                    container_num = 8, 
+                    amount_oz=total_oz, 
+                    stirring=0)  
         print(instance.text)
 
     def on_pre_enter(self):

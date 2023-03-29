@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 from time import sleep
 
-CONTAINER_PINS = {1 : 2, 2 : 3, 3 : 4, 4 : 15, 5 : 27}
+CONTAINER_PINS = {1 : 27, 2 : 3, 3 : 4, 4 : 2, 5 : 22, 6 : 10, 7 : 6, 8 : 0}
 FLOW_RATE = 1.0 # oz/sec
 
 '''
