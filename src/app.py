@@ -11,16 +11,22 @@ from kivy.lang import Builder
 from kivy.uix.textinput import TextInput
 import container as c
 import barbot_client as bbc
+from math import ceil
 kivy.require('1.9.0')
 
 
 FULL_OZ_CONTAINER = 100
 
-# CHANGE
-df = pd.read_csv("drinkRecipes3.csv")
+
+df = pd.read_csv("drinkRecipes3.csv")  # CHANGE
 df.set_index('Drink Name', inplace=True)
 
 CONTAINERS = []
+
+
+
+class FlavorScreen(Screen): 
+    pass
 
 
 class HomeScreen(Screen):
@@ -28,8 +34,13 @@ class HomeScreen(Screen):
 
 class DrinkMenu(Screen):
 
+    def back(self, instance):
+        print("hello")
+       # self.current = "home"
+    
+
     def order_function(self, instance):
-        ### insert GRPC call!
+        ### insert GRPC call!!
         drink_row = df.loc[[instance.text]]
         names_of_drinks = list(drink_row.columns)
         [values_from_drink] = drink_row.values.tolist()
@@ -63,17 +74,19 @@ class DrinkMenu(Screen):
 
     def on_pre_enter(self):
 
-        self.stack = StackLayout()
-        self.add_widget(self.stack)
         if not BarBot.drinks:
             print("No Drinks!")
 
         else:
-            for drink in BarBot.drinks:
-                #self.add_widget(Button(background_normal=f'{drink}.png', size_hint=(0.3, 0.3), keep_ratio=False, allow_stretch=True))
-                self.stack.add_widget(Button(background_normal=f'pics/{drink}.png', on_press=self.order_function, text=f'{drink}', font_size=32, size_hint=(0.3, 0.3)))
-                #self.stack.add_widget()
+            print("length")
+            print(len(BarBot.drinks))
+            num_cols = ceil(len(BarBot.drinks) / 3)
+            print("cols")
+            print(num_cols)
 
+            for drink in BarBot.drinks:
+                self.ids.stack.add_widget(Button(background_normal=f'pics/{drink}.png', on_press=self.order_function, text=f'{drink}', font_size=32, size_hint=(1/num_cols, 0.25)))
+        
 
 
 class AdminMenu(Screen):
@@ -114,19 +127,31 @@ class AdminMenu(Screen):
                 BarBot.drinks.append(drink)
 
 
+    
+
+
+
 class UI(ScreenManager):
+
+    def back_home(self):
+        self.current = "home"
+
     def __init__(self): 
         super(UI, self).__init__()
         self.add_widget(HomeScreen(name="home"))
         self.add_widget(DrinkMenu(name="menu"))
         self.add_widget(AdminMenu(name="admin"))
         
+        
+
+
+
 
 class BarBot(MDApp):
     
     def build(self):
-        BarBot.drinks = ['Margarita', 'Gin and Tonic', 'Vodka Cranberry', 'Old Fashioned', 'Tequila Sunrise']
-        BarBot.set_containers = []
+        #   BarBot.drinks = ['Margarita', 'Gin and Tonic', 'Vodka Cranberry', 'Old Fashioned', 'Tequila Sunrise']
+        BarBot.drinks = []
         return UI()
 
 
