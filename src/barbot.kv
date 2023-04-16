@@ -24,23 +24,36 @@
 
 
 <DrinkMenu>:
-    StackLayout:
-        # Button:
-        #     background_normal: 'martini.png' 
-        #     size_hint: .5, .5
-        #     keep_ratio: False
-        #     allow_stretch: True
 
-        # Button:
-        #     background_normal: 'gintonic.png' 
-        #     size_hint: .5, .5
-        #     keep_ratio: False
-        #     allow_stretch: True
+    Label:
+        text: 'Click a drink to order!'
+        font_size: 20
+        font: 'bold'
+        color: 1, 0.45, 0
+        pos_hint: {"center_x":.5, "center_y": 0.95}
+
+
+    StackLayout:
+        id: stack
+
+    MDRaisedButton:
+        text: "Back"
+        md_bg_color: "red"
+        pos_hint: {"center_x":0.04, "center_y":0.03}
+        on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "home"
+
 
 
 
 <AdminMenu>:
     FloatLayout:
+        MDRaisedButton:
+            text: "Back"
+            pos: 0, 0
+            md_bg_color: "red"
+            #pos_hint: {"center_x":.75, "center_y":.5 }
+            on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "home"
+
         TextInput:
             id: c1
             size_hint: .5, .05
@@ -129,6 +142,7 @@
         MDRaisedButton:
             text: "Submit"
             pos_hint: {"center_x":.75, "center_y":.05 }
+            md_bg_color: "green"
             on_press: root.submit(); app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "home"
             #on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "home"
 
