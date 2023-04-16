@@ -11,7 +11,7 @@ from kivy.lang import Builder
 from kivy.uix.textinput import TextInput
 import container as c
 import barbot_client as bbc
-import math
+from math import ceil
 kivy.require('1.9.0')
 
 
