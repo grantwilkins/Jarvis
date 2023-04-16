@@ -13,7 +13,7 @@
         MDRaisedButton:
             text: "Drink Menu"
             pos_hint: {"center_x":.5, "center_y":.5 }
-            on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "menu"
+            on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "flavor"
 
         
         MDRaisedButton:
@@ -43,6 +43,27 @@
         on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "home"
 
 
+<FlavorMenu>:
+
+    Label:
+        text: 'Click a flavor to add to your order!'
+        font_size: 20
+        font: 'bold'
+        color: 1, 0.45, 0
+        pos_hint: {"center_x":.5, "center_y": 0.95}
+
+
+    StackLayout:
+        id: stack
+
+    MDRaisedButton:
+        text: "Back"
+        md_bg_color: "red"
+        pos_hint: {"center_x":0.04, "center_y":0.03}
+        on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "home"
+
+
+
 
 
 <AdminMenu>:
@@ -57,7 +78,7 @@
         TextInput:
             id: c1
             size_hint: .5, .05
-            pos_hint: {"center_x":.5, "center_y": 0.94}
+            pos_hint: {"center_x":.25, "center_y": 0.94}
             spacing: 0
 
 
@@ -66,7 +87,7 @@
             font_size: 20
             font: 'bold'
             color: 1, 0.45, 0
-            pos_hint: {"center_x":.5, "center_y": 0.89}
+            pos_hint: {"center_x":.25, "center_y": 0.89}
 
 
         TextInput:

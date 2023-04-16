@@ -25,8 +25,16 @@ CONTAINERS = []
 
 
 
-class FlavorScreen(Screen): 
-    pass
+class FlavorMenu(Screen): 
+
+        def order_function(self, instance):
+            pass
+
+
+        def on_pre_enter(self):
+
+            for i in range(4):
+                self.ids.stack.add_widget(Button(on_press=self.order_function, text=f'Flavor #{i}', font_size=32, size_hint=(1, 0.25)))
 
 
 class HomeScreen(Screen):
@@ -45,7 +53,7 @@ class DrinkMenu(Screen):
         names_of_drinks = list(drink_row.columns)
         [values_from_drink] = drink_row.values.tolist()
         ingredient_tuples = []
-        total_oz = 0;
+        total_oz = 0
         for idx, amount in enumerate(values_from_drink):
             if amount != 0:
                 ingredient_tuples.append((names_of_drinks[idx], amount))
@@ -68,7 +76,7 @@ class DrinkMenu(Screen):
         bbc.place_order(user_id = "test@hotmail.com", 
                     drink_name = "Pump Out", 
                     container_num = 8, 
-                    amount_oz=total_oz + 1, 
+                    amount_oz=total_oz, 
                     stirring=0)  
         print(instance.text)
 
@@ -97,12 +105,7 @@ class AdminMenu(Screen):
 
         ## search for drinks that can be made
         containers = [self.ids.c1.text, self.ids.c2.text, self.ids.c3.text, self.ids.c4.text, self.ids.c5.text, self.ids.c6.text]
-
-        # Create container objects for all inputs
-        for idx, container_name in enumerate(containers):
-            if container_name != '':
-                BarBot.set_containers.append(c.Container(container_name, FULL_OZ_CONTAINER, idx + 1))
-
+     
         i = 0
         i_containers = []
         for col in df.columns:
