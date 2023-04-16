@@ -7,7 +7,7 @@ import barbot_pb2_grpc
 import barbot_pb2
 
 IP_ADDR = '172.20.10.7'
-PORT = '50051'
+PORT = '5005'
 
 def place_order(user_id, drink_name, container_num, amount_oz, stirring):
     print("Will try to place order ...")

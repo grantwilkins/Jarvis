@@ -57,7 +57,7 @@ class DrinkMenu(Screen):
         bbc.place_order(user_id = "test@hotmail.com", 
                     drink_name = "Pump Out", 
                     container_num = 8, 
-                    amount_oz=total_oz, 
+                    amount_oz=total_oz + 1, 
                     stirring=0)  
         print(instance.text)
 
@@ -88,7 +88,7 @@ class AdminMenu(Screen):
         # Create container objects for all inputs
         for idx, container_name in enumerate(containers):
             if container_name != '':
-                BarBot.set_containers.append(c.Container(container_name, FULL_OZ_CONTAINER, idx))
+                BarBot.set_containers.append(c.Container(container_name, FULL_OZ_CONTAINER, idx + 1))
 
         i = 0
         i_containers = []
