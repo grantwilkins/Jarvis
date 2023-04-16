@@ -6,7 +6,7 @@ import grpc
 import barbot_pb2_grpc
 import barbot_pb2
 
-IP_ADDR = '172.20.10.7'
+IP_ADDR = 'localhost'
 PORT = '5005'
 
 def place_order(user_id, drink_name, container_num, amount_oz, stirring):
@@ -19,7 +19,7 @@ def place_order(user_id, drink_name, container_num, amount_oz, stirring):
             container_num = container_num,
             amount_oz = amount_oz,
             stirring   = stirring))
-    print("Client ack received: " + response.user_id + " ordered " + response.drink_name)
+    print("Client ack received: " + response.user_id + " ordered " + str(amount_oz) + "oz of " + response.drink_name)
 
 def inject_flavor(user_id, flavor_name, flavor_id):
     print("Will try to place order ...")

@@ -6,14 +6,14 @@
         orientation: "vertical"
         Label:
             text: 'BarBot'
-            font_size: 64
+            font_size: 128
             font: 'bold'
             color: 0.92, 0.45, 0
             
         MDRaisedButton:
             text: "Drink Menu"
             pos_hint: {"center_x":.5, "center_y":.5 }
-            on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "flavor"
+            on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "menu"
 
         
         MDRaisedButton:
@@ -21,6 +21,12 @@
             pos: 50, 50
             #pos_hint: {"center_x":.75, "center_y":.5 }
             on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "admin"
+
+        MDRaisedButton:
+            text: "Levels"
+            pos: 200, 50
+            #pos_hint: {"center_x":.75, "center_y":.5 }
+            on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "levels"
 
 
 <DrinkMenu>:
@@ -42,17 +48,7 @@
         pos_hint: {"center_x":0.04, "center_y":0.03}
         on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "home"
 
-
-<FlavorMenu>:
-
-    Label:
-        text: 'Click a flavor to add to your order!'
-        font_size: 20
-        font: 'bold'
-        color: 1, 0.45, 0
-        pos_hint: {"center_x":.5, "center_y": 0.95}
-
-
+<LevelMenu>:
     StackLayout:
         id: stack
 
@@ -62,9 +58,9 @@
         pos_hint: {"center_x":0.04, "center_y":0.03}
         on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "home"
 
-
-
-
+<FlavorMenu>:
+    StackLayout:
+        id: stack
 
 <AdminMenu>:
     FloatLayout:
@@ -78,7 +74,7 @@
         TextInput:
             id: c1
             size_hint: .5, .05
-            pos_hint: {"center_x":.25, "center_y": 0.94}
+            pos_hint: {"center_x":.5, "center_y": 0.94}
             spacing: 0
 
 
@@ -87,7 +83,7 @@
             font_size: 20
             font: 'bold'
             color: 1, 0.45, 0
-            pos_hint: {"center_x":.25, "center_y": 0.89}
+            pos_hint: {"center_x":.5, "center_y": 0.89}
 
 
         TextInput:
@@ -166,7 +162,3 @@
             md_bg_color: "green"
             on_press: root.submit(); app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "home"
             #on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "home"
-
-
-
-
