@@ -15,6 +15,7 @@ class Barbot(barbot_pb2_grpc.BarbotServicer):
 
     def InjectFlavor(self, request, context):
         print("Received flavor injection from " + request.user_id + " for " + request.flavor_name)
+        pumping_system.flavor_out(request.flavor_id)
         return barbot_pb2.FlavorReply(user_id=request.user_id, flavor_name=request.flavor_name)
     
     def QueryLevels(self, request, context):
