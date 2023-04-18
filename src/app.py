@@ -27,6 +27,10 @@ FLAVOR_COLORS = ["#00FF00", "#FFFF00", "#FFA500", "#FF0000", "#FFFFFF"]
 CONTAINER_COLORS= ["#FF0000", "#FFA500", "#FFFF00", "#00FF00", "#0000FF", "#4B0082", "#9400D3", "#FFFFFF"]
 FLAVOR_DICT = dict(zip(FLAVOR_NAMES, FLAVOR_COLORS))
 
+
+class AdminMenu(Screen):
+    pass
+
 class LevelMenu(Screen):
     def on_pre_enter(self):
         global CONTAINERS
@@ -70,14 +74,24 @@ class FlavorMenu(Screen):
 
 
 class HomeScreen(Screen):
-    pass
+
+    def admin(self, instance):
+        self.manager.current = "admin"
+
+    def on_pre_enter(self):
+
+        self.ids.fl.add_widget(Button(background_normal=f'pics/wrench-icon.png', 
+                                                on_press=self.admin, 
+                                                pos_hint={"x":0.0, "y":0.0},
+                                                size_hint=(0.1,0.1)))
+
+        
 
 class DrinkMenu(Screen):
 
+
     def back(self, instance):
-        print("hello")
-       # self.current = "home"
-    
+        self.manager.current = "home"
 
     def order_function(self, instance):
         ### insert GRPC call!!
@@ -108,26 +122,24 @@ class DrinkMenu(Screen):
 
     def on_pre_enter(self):
 
-        if not BarBot.drinks:
-            print("No Drinks!")
+        self.ids.stack.clear_widgets()
+        self.ids.stack.add_widget(Button(text="Click a drink to order it!",
+                                         background_color=[0.82, 0.7, 0.54, 1],
+                                         font_size=40, 
+                                         size_hint=(1, 0.25),
+                                         font_name="art/Harlow"))
 
-        else:
-            print("length")
-            print(len(BarBot.drinks))
-            num_cols = ceil(len(BarBot.drinks) / 3)
-            print("cols")
-            print(num_cols)
-            self.ids.stack.clear_widgets()
-            for drink in BarBot.drinks:
-                self.ids.stack.add_widget(Button(background_normal=f'pics/{drink}.png', 
-                                                 on_press=self.order_function, 
-                                                 text=f'{drink}', 
-                                                 font_size=32, 
-                                                 size_hint=(1/num_cols, 0.25)))
+        for drink in BarBot.drinks:
+            self.ids.stack.add_widget(Button(background_normal=f'pics/{drink}.png', 
+                                                on_press=self.order_function, 
+                                                text=f'{drink}', 
+                                                font_size=32 
+                                                ))
+                                                #,size_hint=(1/num_cols, 0.25)))
         
 
 
-class AdminMenu(Screen):
+class ConfigMenu(Screen):
 
     def submit(self):
 
@@ -151,7 +163,6 @@ class AdminMenu(Screen):
             i += 1
 
         for drink, vals in df.iterrows():
-            #print(drink)
             
             i = 0
             i_drink = []
@@ -175,9 +186,10 @@ class UI(ScreenManager):
         super(UI, self).__init__()
         self.add_widget(HomeScreen(name="home"))
         self.add_widget(DrinkMenu(name="menu"))
-        self.add_widget(AdminMenu(name="admin"))
+        self.add_widget(ConfigMenu(name="config"))
         self.add_widget(FlavorMenu(name="flavor"))
         self.add_widget(LevelMenu(name="levels"))
+        self.add_widget(AdminMenu(name="admin"))
 
 class BarBot(MDApp):
     

@@ -1,51 +1,97 @@
 #:import FadeTransition kivy.uix.screenmanager.FadeTransition
 
 
-<HomeScreen>:  
-    BoxLayout:
-        orientation: "vertical"
+<AdminMenu>: 
+    canvas.before:
+        Color:
+            rgba: 0.82, 0.7, 0.54, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    FloatLayout:
+        
+        Label:
+            text: 'Administrative Tools'
+            font_size: 32
+            font: 'underline'
+            color: 0, 0, 0
+            pos_hint: {"center_x":.5, "center_y":.7 }
+        MDRaisedButton:
+            text: "Container Configuration"
+            #pos: 50, 50
+            pos_hint: {"center_x":.5, "center_y":.4 }
+            on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "config"
+
+        MDRaisedButton:
+            text: "Container Levels"
+            #pos: 200, 50
+            pos_hint: {"center_x":.5, "center_y":.2 }
+            on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "levels"
+
+        Button:
+            background_normal: 'pics/home.png' 
+            color: "red"
+            size_hint: 0.1, 0.125
+            pos_hint: {"center_x":0.05, "center_y":0.05}
+            on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "home"
+
+
+<HomeScreen>: 
+    canvas.before:
+        Color:
+            rgba: 0.82, 0.7, 0.54, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    FloatLayout:
+        id: fl
+        #orientation: "vertical"
         Label:
             text: 'BarBot'
             font_size: 128
             font: 'bold'
             color: 0.92, 0.45, 0
+            font_name: 'art/Harlow'
+            pos_hint: {"center_x":.5, "center_y":.8 }
+
             
         MDRaisedButton:
+            md_bg_color: 0.92, 0.45, 0
             text: "Drink Menu"
-            pos_hint: {"center_x":.5, "center_y":.5 }
+            size_hint: (0.3, 0.3)
+            font_size: 50
+            font_name: 'art/Harlow'
+            pos_hint: {"center_x":.5, "center_y":.4}
             on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "menu"
 
-        
-        MDRaisedButton:
-            text: "Admin"
-            pos: 50, 50
-            #pos_hint: {"center_x":.75, "center_y":.5 }
-            on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "admin"
-
-        MDRaisedButton:
-            text: "Levels"
-            pos: 200, 50
-            #pos_hint: {"center_x":.75, "center_y":.5 }
-            on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "levels"
 
 
 <DrinkMenu>:
+
+    canvas.before:
+        Color:
+            rgba: 0.82, 0.7, 0.54, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
 
     Label:
         text: 'Click a drink to order!'
         font_size: 20
         font: 'bold'
-        color: 1, 0.45, 0
+        color: 0.82, 0.7, 0.54, 1
         pos_hint: {"center_x":.5, "center_y": 0.95}
 
 
     StackLayout:
         id: stack
 
-    MDRaisedButton:
-        text: "Back"
-        md_bg_color: "red"
-        pos_hint: {"center_x":0.04, "center_y":0.03}
+    Button:
+        background_normal: 'pics/home.png' 
+        color: "red"
+        size_hint: 0.1, 0.125
+        pos_hint: {"center_x":0.05, "center_y":0.05}
         on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "home"
 
 <LevelMenu>:
@@ -56,20 +102,26 @@
         text: "Back"
         md_bg_color: "red"
         pos_hint: {"center_x":0.04, "center_y":0.03}
-        on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "home"
+        on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "admin"
 
 <FlavorMenu>:
     StackLayout:
         id: stack
 
-<AdminMenu>:
+<ConfigMenu>:
+    canvas.before:
+        Color:
+            rgba: 0.82, 0.7, 0.54, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
     FloatLayout:
         MDRaisedButton:
             text: "Back"
             pos: 0, 0
             md_bg_color: "red"
             #pos_hint: {"center_x":.75, "center_y":.5 }
-            on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "home"
+            on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "admin"
 
         TextInput:
             id: c1
