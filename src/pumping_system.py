@@ -2,7 +2,8 @@ import RPi.GPIO as GPIO
 from time import sleep
 
 # Format: {container_num : gpio pin}
-CONTAINER_PINS = {1 : 27, 2 : 3, 3 : 4, 4 : 2, 5 : 22, 6 : 10, 7 : 6, 8 : 0}
+CONTAINER_PINS = {1 : 25, 2 : 11, 3 : 22, 4 : 27, 5 : 12, 6 : 1, 7 : 7, 8 : 20}
+#pin 6 for valve high
 
 # Format: {flavor_num : [gpio actuator_out, gpio actuator_in]}
 FLAVOR_PINS = {1 : [1, 2], 2 : [3, 4], 3 : [5, 6], 4 : [7,8]}
