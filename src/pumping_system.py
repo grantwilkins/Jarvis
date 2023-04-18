@@ -15,26 +15,31 @@ Initialize our pumping system
 '''
 def init_pumping_system():
 	GPIO.setmode(GPIO.BCM)
+	for i in range(27):
+		GPIO.setup(i, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+	'''
 	for _, pin in CONTAINER_PINS.items():
 		GPIO.setup(pin, GPIO.OUT)
-		GPIO.output(pin, 0)
+		GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+		GPIO.output(pin, )
 	for _, pin_set in FLAVOR_PINS.items():
 		for pin in pin_set:
 			GPIO.setup(pin, GPIO.OUT)
 			GPIO.output(pin, 0)
+	'''
 
 '''
 Externally called by the drink server. Will fill in a flavor object which
 is through an actuator.
 '''
 def flavor_out(flavor_num):
-	GPIO.output(FLAVOR_PINS[flavor_num][0],1)
-	GPIO.output(FLAVOR_PINS[flavor_num][1],0)
+	GPIO.setup(FLAVOR_PINS[flavor_num][0],GPIO.IN, pull_up_down=GPIO.PUD_UP)
+	GPIO.output(FLAVOR_PINS[flavor_num][1],GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 	sleep(FLAVOR_TIME)
-	GPIO.output(FLAVOR_PINS[flavor_num][0],0)
-	GPIO.output(FLAVOR_PINS[flavor_num][1],1)
+	GPIO.output(FLAVOR_PINS[flavor_num][0],GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+	GPIO.output(FLAVOR_PINS[flavor_num][1],GPIO.IN, pull_up_down=GPIO.PUD_UP)
 	sleep(FLAVOR_TIME)
-	GPIO.output(FLAVOR_PINS[flavor_num][1],0)
+	GPIO.output(FLAVOR_PINS[flavor_num][1],GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 	return 0
 
 
@@ -44,7 +49,7 @@ and then will determine the sleep time from the ounces_requested.
 '''
 def pump_out(container_num, ounces_requested):
 	time_on = ounces_requested / FLOW_RATE
-	GPIO.output(CONTAINER_PINS[container_num],1)
+	GPIO.setup(CONTAINER_PINS[container_num],GPIO.IN, pull_up_down=GPIO.PUD_UP)
 	sleep(time_on)
-	GPIO.output(CONTAINER_PINS[container_num],0)
+	GPIO.output(CONTAINER_PINS[container_num],GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 	return 0
