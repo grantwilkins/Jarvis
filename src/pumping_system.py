@@ -53,9 +53,9 @@ def pump_out(container_num, ounces_requested):
 	time_on = ounces_requested / FLOW_RATE
 	if(container_num == 8):
 		GPIO.setup(6,GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-		GPIO.setup(5,GPIO.IN, pull_up_down=GPIO.PUD_HIGH)
+		GPIO.setup(5,GPIO.IN, pull_up_down=GPIO.PUD_UP)
 	if(container_num == 9):
-		GPIO.setup(6,GPIO.IN, pull_up_down=GPIO.PUD_HIGH)
+		GPIO.setup(6,GPIO.IN, pull_up_down=GPIO.PUD_UP)
 		GPIO.setup(5,GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 	GPIO.setup(CONTAINER_PINS[container_num],GPIO.IN, pull_up_down=GPIO.PUD_UP)
 	sleep(time_on)
