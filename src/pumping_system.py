@@ -45,8 +45,17 @@ def pump_out(container_num, ounces_requested):
 		GPIO.setup(6,GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 		GPIO.setup(5,GPIO.IN, pull_up_down=GPIO.PUD_UP)
 	if(container_num == 9):
+		GPIO.setup(CONTAINER_PINS[container_num],GPIO.IN, pull_up_down=GPIO.PUD_UP)
+		sleep(time_on)
+		GPIO.setup(CONTAINER_PINS[container_num],GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 		GPIO.setup(6,GPIO.IN, pull_up_down=GPIO.PUD_UP)
 		GPIO.setup(5,GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+		GPIO.setup(CONTAINER_PINS[8],GPIO.IN, pull_up_down=GPIO.PUD_UP)
+		sleep(time_on)
+		GPIO.setup(CONTAINER_PINS[8],GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+		GPIO.setup(6,GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+		GPIO.setup(5,GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+		return 0
 	GPIO.setup(CONTAINER_PINS[container_num],GPIO.IN, pull_up_down=GPIO.PUD_UP)
 	sleep(time_on)
 	GPIO.setup(CONTAINER_PINS[container_num],GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
