@@ -3,10 +3,11 @@ from time import sleep
 
 # Format: {container_num : gpio pin}
 CONTAINER_PINS = {1 : 25, 2 : 11, 3 : 22, 4 : 27, 5 : 12, 6 : 1, 7 : 7, 8 : 20}
-#pin 6 for valve high
+#pin 6 for valve low
+# pin 5 for valve high
 
 # Format: {flavor_num : [gpio actuator_out, gpio actuator_in]}
-FLAVOR_PINS = {1 : [1, 2], 2 : [3, 4], 3 : [5, 6], 4 : [7,8]}
+FLAVOR_PINS = {1 : [14, 26], 2 : [24, 23], 3 : [5, 6], 4 : [7,8]}
 FLAVOR_TIME = 1.0 # seconds
 
 FLOW_RATE = 1.0 # oz/sec
@@ -50,7 +51,15 @@ and then will determine the sleep time from the ounces_requested.
 '''
 def pump_out(container_num, ounces_requested):
 	time_on = ounces_requested / FLOW_RATE
+	if(container_num == 8):
+		GPIO.setup(6,GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+		GPIO.output(5,GPIO.IN, pull_up_down=GPIO.PUD_HIGH)
+	if(container_num == 9):
+		GPIO.setup(6,GPIO.IN, pull_up_down=GPIO.PUD_HIGH)
+		GPIO.output(5,GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 	GPIO.setup(CONTAINER_PINS[container_num],GPIO.IN, pull_up_down=GPIO.PUD_UP)
 	sleep(time_on)
 	GPIO.output(CONTAINER_PINS[container_num],GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+	GPIO.setup(6,GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+	GPIO.output(5,GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 	return 0
