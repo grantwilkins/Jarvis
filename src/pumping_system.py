@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 from time import sleep
 
 # Format: {container_num : gpio pin}
-CONTAINER_PINS = {1 : 25, 2 : 11, 3 : 22, 4 : 27, 5 : 12, 6 : 1, 7 : 7, 8 : 20}
+CONTAINER_PINS = {1 : 25, 2 : 11, 3 : 22, 4 : 27, 5 : 12, 6 : 1, 7 : 7, 8 : 20, 9: 4}
 #pin 6 for valve low
 # pin 5 for valve high
 

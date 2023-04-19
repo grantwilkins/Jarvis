@@ -15,15 +15,15 @@ from math import ceil
 kivy.require('1.9.0')
 
 
-FULL_OZ_CONTAINER = 100
+FULL_OZ_CONTAINER = 25.3605 # 750 mL
 amount_to_dispense = 0
 
 df = pd.read_csv("drinkRecipes3.csv")  # CHANGE
 df.set_index('Drink Name', inplace=True)
 
 CONTAINERS = []
-FLAVOR_NAMES = ["Mint", "Lime", "Orange", "Grapefruit", "None"]
-FLAVOR_COLORS = ["#00FF00", "#FFFF00", "#FFA500", "#FF0000", "#FFFFFF"]
+FLAVOR_NAMES = ["Mint", "Lime", "None"]
+FLAVOR_COLORS = ["#00FF00", "#FFFF00", "#FFFFFF"]
 CONTAINER_COLORS= ["#FF0000", "#FFA500", "#FFFF00", "#00FF00", "#0000FF", "#4B0082", "#9400D3", "#FFFFFF"]
 FLAVOR_DICT = dict(zip(FLAVOR_NAMES, FLAVOR_COLORS))
 
@@ -54,7 +54,6 @@ class FlavorMenu(Screen):
         def order_function(self, instance):
             global amount_to_dispense
             flavor_num = FLAVOR_NAMES.index(instance.text) + 1
-            print(flavor_num)
             if(instance.text != "None"):
                 bbc.inject_flavor(user_id = "admin",
                                 flavor_name = instance.text,
@@ -76,7 +75,7 @@ class FlavorMenu(Screen):
             self.ids.stack.clear_widgets()
             self.ids.stack.add_widget(Button(text="Select Flavor",background_color="blue",font_size=40, size_hint=(1, 0.1)))
             for flavor in FLAVOR_NAMES:
-                self.ids.stack.add_widget(Button(on_press=self.order_function,background_color=FLAVOR_DICT[flavor] ,text=flavor,font_size=48, size_hint=(1, 0.18)))
+                self.ids.stack.add_widget(Button(on_press=self.order_function,background_color=FLAVOR_DICT[flavor] ,text=flavor,font_size=48, size_hint=(1, 1/len(FLAVOR_NAMES))))
 
 
 class HomeScreen(Screen):
@@ -110,7 +109,6 @@ class DrinkMenu(Screen):
         for idx, amount in enumerate(values_from_drink):
             if amount != 0:
                 ingredient_tuples.append((names_of_drinks[idx], amount))
-        print(ingredient_tuples)
         for ingredient, amount in ingredient_tuples:
             for container in CONTAINERS:
                 if container.get_ingredient_name() == ingredient:
@@ -123,7 +121,6 @@ class DrinkMenu(Screen):
                                 stirring=1)
         amount_to_dispense = total_oz
         self.manager.current = "flavor"
-        print(instance.text)
 
 
     def on_pre_enter(self):
@@ -179,7 +176,6 @@ class ConfigMenu(Screen):
                 i += 1
            
             if i_drink and set(i_drink).issubset(set(i_containers)) and drink not in BarBot.drinks:
-                print(f'{drink} is in!')
                 BarBot.drinks.append(drink)
         
 
