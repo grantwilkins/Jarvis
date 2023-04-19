@@ -2,13 +2,13 @@ import RPi.GPIO as GPIO
 from time import sleep
 
 # Format: {container_num : gpio pin}
-CONTAINER_PINS = {1 : 25, 2 : 11, 3 : 22, 4 : 27, 5 : 12, 6 : 1, 7 : 7, 8 : 20, 9: 4}
+CONTAINER_PINS = {1 : 19, 2 : 11, 3 : 22, 4 : 27, 5 : 12, 6 : 1, 7 : 7, 8 : 20, 9: 4}
 #pin 6 for valve low
 # pin 5 for valve high
 
 # Format: {flavor_num : [gpio actuator_out, gpio actuator_in]}
 FLAVOR_PINS = {1 : [14, 26], 2 : [24, 23], 3 : [5, 6], 4 : [7,8]}
-FLAVOR_TIME = 1.0 # seconds
+FLAVOR_TIME = 0.3 # seconds
 
 FLOW_RATE = 1.0 # oz/sec
 
@@ -29,8 +29,6 @@ def flavor_out(flavor_num):
 	GPIO.setup(FLAVOR_PINS[flavor_num][1],GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 	sleep(FLAVOR_TIME)
 	GPIO.setup(FLAVOR_PINS[flavor_num][0],GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-	GPIO.setup(FLAVOR_PINS[flavor_num][1],GPIO.IN, pull_up_down=GPIO.PUD_UP)
-	sleep(FLAVOR_TIME)
 	GPIO.setup(FLAVOR_PINS[flavor_num][1],GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 	return 0
 

@@ -40,5 +40,6 @@ def query_levels():
     print("Client ack received: " + response.user_id + " ordered " + response.drink_name)
 
 
-if __name__ == '__main__': 
+if __name__ == '__main__':
+    inject_flavor("test", "test", 1)
     logging.basicConfig()
