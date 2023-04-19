@@ -29,6 +29,12 @@ FLAVOR_DICT = dict(zip(FLAVOR_NAMES, FLAVOR_COLORS))
 
 
 class AdminMenu(Screen):
+    def clean(self):
+        bbc.place_order(user_id = "admin", 
+                    drink_name = "Clean System", 
+                    container_num = 9, 
+                    amount_oz= 10, 
+                    stirring=0)
     pass
 
 class LevelMenu(Screen):
@@ -53,12 +59,12 @@ class FlavorMenu(Screen):
                 bbc.inject_flavor(user_id = "admin",
                                 flavor_name = instance.text,
                                 flavor_id = flavor_num)
-            bbc.place_order(user_id = "test@hotmail.com", 
+            bbc.place_order(user_id = "admin", 
                     drink_name = "Stirring", 
                     container_num = 7, 
                     amount_oz=3, 
                     stirring=1) 
-            bbc.place_order(user_id = "test@hotmail.com", 
+            bbc.place_order(user_id = "admin", 
                     drink_name = "Pump Out", 
                     container_num = 8, 
                     amount_oz=amount_to_dispense, 
@@ -110,7 +116,7 @@ class DrinkMenu(Screen):
                 if container.get_ingredient_name() == ingredient:
                     container.decrease_level(amount)
                     total_oz += amount
-                    bbc.place_order(user_id = "test@hotmail.com", 
+                    bbc.place_order(user_id = "admin", 
                                 drink_name = container.get_ingredient_name(), 
                                 container_num = container.get_container_num(), 
                                 amount_oz=amount, 

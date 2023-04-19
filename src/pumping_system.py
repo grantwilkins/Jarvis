@@ -19,16 +19,6 @@ def init_pumping_system():
 	GPIO.setmode(GPIO.BCM)
 	for i in range(27):
 		GPIO.setup(i, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-	'''
-	for _, pin in CONTAINER_PINS.items():
-		GPIO.setup(pin, GPIO.OUT)
-		GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-		GPIO.output(pin, )
-	for _, pin_set in FLAVOR_PINS.items():
-		for pin in pin_set:
-			GPIO.setup(pin, GPIO.OUT)
-			GPIO.output(pin, 0)
-	'''
 
 '''
 Externally called by the drink server. Will fill in a flavor object which
