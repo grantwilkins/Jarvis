@@ -31,7 +31,7 @@
         Button:
             background_normal: 'pics/home.png' 
             color: "red"
-            size_hint: 0.1, 0.125
+            size_hint: 0.1, 0.15
             pos_hint: {"center_x":0.05, "center_y":0.05}
             on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "home"
 
@@ -96,7 +96,7 @@
     Button:
         background_normal: 'pics/home.png' 
         color: "red"
-        size_hint: 0.1, 0.125
+        size_hint: 0.1, 0.15
         pos_hint: {"center_x":0.05, "center_y":0.05}
         on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "home"
 
@@ -107,7 +107,8 @@
     MDRaisedButton:
         text: "Back"
         md_bg_color: "red"
-        pos_hint: {"center_x":0.04, "center_y":0.03}
+        size_hint: 0.06, 0.05
+        pos: 0, 0
         on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "admin"
 
 <FlavorMenu>:
@@ -126,7 +127,7 @@
             text: "Back"
             pos: 0, 0
             md_bg_color: "red"
-            #pos_hint: {"center_x":.75, "center_y":.5 }
+            size_hint: 0.06, 0.05
             on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "admin"
 
         TextInput:
@@ -216,7 +217,8 @@
 
         MDRaisedButton:
             text: "Submit"
-            pos_hint: {"center_x":.75, "center_y":.05 }
+            size_hint: 0.06, 0.05
+            pos_hint: {"center_x":.8, "center_y":0.025}
             md_bg_color: "green"
             on_press: root.submit(); app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "home"
             #on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "home"

@@ -89,7 +89,7 @@ class HomeScreen(Screen):
         self.ids.fl.add_widget(Button(background_normal=f'pics/wrench-icon.png', 
                                                 on_press=self.admin, 
                                                 pos_hint={"x":0.0, "y":0.0},
-                                                size_hint=(0.1,0.1)))
+                                                size_hint=(0.1,0.15)))
 
         
 
@@ -139,7 +139,8 @@ class DrinkMenu(Screen):
             self.ids.stack.add_widget(Button(background_normal=f'pics/{drink}.png', 
                                                 on_press=self.order_function, 
                                                 text=f'{drink}', 
-                                                font_size=32 
+                                                font_size=32,
+                                                size_hint = (0.2,0.25)
                                                 ))
                                                 #,size_hint=(1/num_cols, 0.25)))
         
