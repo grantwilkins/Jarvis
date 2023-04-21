@@ -64,7 +64,7 @@
             
         MDRaisedButton:
             md_bg_color: 0.92, 0.45, 0
-            text: "Drink Menu"
+            text: "Ordering Menu"
             size_hint: (0.3, 0.3)
             font_size: 50
             font_name: 'art/Harlow'
@@ -114,6 +114,16 @@
 <FlavorMenu>:
     StackLayout:
         id: stack
+        
+<DrinkOrderSynopsis>:
+    StackLayout:
+        id: stack
+    Button:
+        background_normal: 'pics/home.png' 
+        color: "red"
+        size_hint: 0.1, 0.15
+        pos_hint: {"center_x":0.05, "center_y":0.05}
+        on_press: app.root.transition = FadeTransition(clearcolor=(0.9,0.75,0.21)); app.root.current = "home"
 
 <ConfigMenu>:
     canvas.before:

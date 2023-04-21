@@ -5,59 +5,47 @@ syntax = "proto3";
 service Barbot {
   // Sends a drink order
   rpc PlaceOrder (OrderRequest) returns (OrderReply) {}
-  rpc InjectFlavor (FlavorRequest) returns (FlavorReply) {}
-  rpc QueryLevels (LevelRequest) returns (LevelReply) {}
+  rpc CleanSystem (CleanRequest) returns (CleanReply) {}
+}
+
+// Container number and amount requested data type
+message OrderTuple {
+  int32 container_id = 1;
+  double amount_oz = 2;
 }
 
 // The request message to make a drink containing the
 // 1. user_id: Identify the user
 // 2. drink_name: The drink the user orders
-// 3. drink_id: The drink id that the user orders
-// 4. stirring: whether the drink should be stirred
+// 3. container_amounts: The drink id that the user orders
+// 4. flavor_name: The flavor the user orders
+// 5. flavor_id: The flavor id that the user orders
 message OrderRequest {
   string user_id = 1;
   string drink_name = 2;
-  int32  container_num = 3;
-  double amount_oz = 4;
-  bool   stirring = 5;
+  repeated OrderTuple container_amounts = 3;
+  string flavor_name = 4;
+  int32 flavor_id = 5;
 }
 
-// The response message upon successful creation
+// The response message upon successful creation of a drink
 // 1. user_id: User that placed the order
 // 2. drink_name: The drink that was requested
+// 3. flavor_name: The flavor that was requested
 message OrderReply {
   string user_id = 1;
   string drink_name = 2;
+  string flavor_name = 3;
 }
 
-// The request message to inject a flavor
+// The request message to do cleaning
 // 1. user_id: Identify the user
-// 2. flavor_name: The flavor the user orders
-// 3. flavor_id: ID for processing
-message FlavorRequest {
+message CleanRequest {
   string user_id = 1;
-  string flavor_name = 2;
-  int32  flavor_id = 3;
 }
 
-// The response message upon successful injection
+// The response message upon successful cleaning
 // 1. user_id: User that placed the order
-// 2. flavor_name: The flavor that was requested
-message FlavorReply {
+message CleanReply {
   string user_id = 1;
-  string flavor_name = 2;
-}
-
-// The request message to query the level
-// 1. container_id: The id that is the container
-message LevelRequest {
-  int32 container_id = 1;
-}
-
-// The response message to query the level
-// 1. container_id: The id that is the container
-// 2. container_level: The level that is available
-message LevelReply {
-  int32 container_id = 1;
-  double container_level = 2;
 }

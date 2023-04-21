@@ -5,22 +5,24 @@ sys.path.append('../device')
 import grpc
 import barbot_pb2_grpc
 import barbot_pb2
-import pumping_system
+#import pumping_system
 class Barbot(barbot_pb2_grpc.BarbotServicer):
 
     def PlaceOrder(self, request, context):
+        order_array = []
         print("Received order from " + request.user_id + " for " + request.drink_name)
-        pumping_system.pump_out(request.container_num, request.amount_oz)
-        return barbot_pb2.OrderReply(user_id=request.user_id, drink_name=request.drink_name)
+        for i in range(len(request.container_amounts)):
+            order_array.append((request.container_amounts[i].container_id, request.container_amounts[i].amount_oz))
+            print("Pumping out " + str(request.container_amounts[i].amount_oz) + " oz from " + str(request.container_amounts[i].container_id))
+        #if(request.flavor_id != 0):
+            #pumping_system.flavor_out(flavor_num=request.flavor_id)
+        #pumping_system.pump_handler(order_array)
+        return barbot_pb2.OrderReply(user_id=request.user_id, drink_name=request.drink_name, flavor_name=request.flavor_name)
 
-    def InjectFlavor(self, request, context):
-        print("Received flavor injection from " + request.user_id + " for " + request.flavor_name)
-        pumping_system.flavor_out(request.flavor_id)
-        return barbot_pb2.FlavorReply(user_id=request.user_id, flavor_name=request.flavor_name)
-    
-    def QueryLevels(self, request, context):
-        print("Received level query from " + request.user_id)
-        return barbot_pb2.LevelReply(container_id=request.container_id, container_level=100)
+    def CleanSystem(self, request, context):
+        print("Received clean request from " + request.user_id)
+        #pumping_system.clean_system()
+        return barbot_pb2.CleanReply(user_id=request.user_id)
 
 def serve():
     port = '5005'
@@ -34,5 +36,5 @@ def serve():
 
 if __name__ == '__main__':
     logging.basicConfig()
-    pumping_system.init_pumping_system()
+    #pumping_system.init_pumping_system()
     serve()

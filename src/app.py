@@ -11,12 +11,12 @@ from kivy.lang import Builder
 from kivy.uix.textinput import TextInput
 import container as c
 import barbot_client as bbc
+import barbot_pb2 
 from math import ceil
 kivy.require('1.9.0')
 
 
 FULL_OZ_CONTAINER = 25.3605 # 750 mL
-amount_to_dispense = 0
 
 df = pd.read_csv("drinkRecipes3.csv")  # CHANGE
 df.set_index('Drink Name', inplace=True)
@@ -27,14 +27,16 @@ FLAVOR_COLORS = ["#00FF00", "#FFFF00", "#FFFFFF"]
 CONTAINER_COLORS= ["#FF0000", "#FFA500", "#FFFF00", "#00FF00", "#0000FF", "#4B0082", "#9400D3", "#FFFFFF"]
 FLAVOR_DICT = dict(zip(FLAVOR_NAMES, FLAVOR_COLORS))
 
+# These global variables define the
+# information for the current order
+DRINK_NAME = ""
+FLAVOR_TO_ORDER = "None" # "None" is no flavor
+FLAVOR_ID = 0 # 0 is no flavor
+ORDER_ARR = []
 
 class AdminMenu(Screen):
     def clean(self):
-        bbc.place_order(user_id = "admin", 
-                    drink_name = "Clean System", 
-                    container_num = 9, 
-                    amount_oz= 10, 
-                    stirring=0)
+        bbc.clean_system("admin")
     pass
 
 class LevelMenu(Screen):
@@ -52,24 +54,12 @@ class LevelMenu(Screen):
 class FlavorMenu(Screen): 
 
         def order_function(self, instance):
-            global amount_to_dispense
+            global FLAVOR_TO_ORDER, FLAVOR_ID
             flavor_num = FLAVOR_NAMES.index(instance.text) + 1
             if(instance.text != "None"):
-                bbc.inject_flavor(user_id = "admin",
-                                flavor_name = instance.text,
-                                flavor_id = flavor_num)
-            bbc.place_order(user_id = "admin", 
-                    drink_name = "Stirring", 
-                    container_num = 7, 
-                    amount_oz=3, 
-                    stirring=1) 
-            bbc.place_order(user_id = "admin", 
-                    drink_name = "Pump Out", 
-                    container_num = 8, 
-                    amount_oz=amount_to_dispense, 
-                    stirring=0)
-            amount_to_dispense = 0
-            self.manager.current = "home"
+                FLAVOR_TO_ORDER = instance.text
+                FLAVOR_ID = flavor_num
+            self.manager.current = "drinkOrderSynopsis"
 
         def on_pre_enter(self):
             self.ids.stack.clear_widgets()
@@ -84,28 +74,53 @@ class HomeScreen(Screen):
         self.manager.current = "admin"
 
     def on_pre_enter(self):
-
+        global DRINK_NAME, FLAVOR_TO_ORDER, FLAVOR_ID, ORDER_ARR
+        DRINK_NAME = ""
+        FLAVOR_TO_ORDER = "None"
+        FLAVOR_ID = 0
+        ORDER_ARR = []
         self.ids.fl.add_widget(Button(background_normal=f'pics/wrench-icon.png', 
                                                 on_press=self.admin, 
                                                 pos_hint={"x":0.0, "y":0.0},
                                                 size_hint=(0.1,0.15)))
 
-        
+class DrinkOrderSynopsis(Screen):
+    def order_function(self, instance):
+        global DRINK_NAME, FLAVOR_TO_ORDER, FLAVOR_ID, ORDER_ARR
+        bbc.place_order(user_id="admin",
+                        drink_name=DRINK_NAME,
+                        order_tuple=ORDER_ARR,
+                        flavor_name=FLAVOR_TO_ORDER,
+                        flavor_id=FLAVOR_ID)
+        DRINK_NAME = ""
+        FLAVOR_TO_ORDER = "None"
+        FLAVOR_ID = 0
+        ORDER_ARR = []
+        self.manager.current = "home"
+
+    def on_pre_enter(self):
+        global DRINK_NAME, FLAVOR_TO_ORDER, FLAVOR_ID
+        self.ids.stack.clear_widgets()
+        '''
+        Add text to this screen that sums up the order
+        '''
+        self.ids.stack.add_widget(Button(text="Order Summary", font_size=48, size_hint=(1, 0.3), background_color="blue"))
+        self.ids.stack.add_widget(Button(text="Drink Name: " + DRINK_NAME, font_size=48,size_hint=(1, 0.2), background_color="tan"))
+        self.ids.stack.add_widget(Button(text="Flavor: " + FLAVOR_TO_ORDER, font_size=48, size_hint=(1, 0.2), background_color="tan"))
+        self.ids.stack.add_widget(Button(text="Order!", font_size=48, on_press=self.order_function, size_hint=(1, 0.3), background_color="green"))
+
 
 class DrinkMenu(Screen):
-
-
     def back(self, instance):
         self.manager.current = "home"
 
     def order_function(self, instance):
-        ### insert GRPC call!!
-        global amount_to_dispense
+        global ORDER_ARR, DRINK_NAME
+        DRINK_NAME = instance.text
         drink_row = df.loc[[instance.text]]
         names_of_drinks = list(drink_row.columns)
         [values_from_drink] = drink_row.values.tolist()
         ingredient_tuples = []
-        total_oz = 0
         for idx, amount in enumerate(values_from_drink):
             if amount != 0:
                 ingredient_tuples.append((names_of_drinks[idx], amount))
@@ -113,14 +128,9 @@ class DrinkMenu(Screen):
             for container in CONTAINERS:
                 if container.get_ingredient_name() == ingredient:
                     container.decrease_level(amount)
-                    total_oz += amount
-                    bbc.place_order(user_id = "admin", 
-                                drink_name = container.get_ingredient_name(), 
-                                container_num = container.get_container_num(), 
-                                amount_oz=amount, 
-                                stirring=1)
-        amount_to_dispense = total_oz
+                    ORDER_ARR.append(barbot_pb2.OrderTuple(container_id=container.container_num, amount_oz=amount))
         self.manager.current = "flavor"
+        
 
 
     def on_pre_enter(self):
@@ -193,12 +203,13 @@ class UI(ScreenManager):
         self.add_widget(FlavorMenu(name="flavor"))
         self.add_widget(LevelMenu(name="levels"))
         self.add_widget(AdminMenu(name="admin"))
+        self.add_widget(DrinkOrderSynopsis(name="drinkOrderSynopsis"))
 
 class BarBot(MDApp):
     
     def build(self):
-        #BarBot.drinks = ['Margarita', 'Gin and Tonic', 'Vodka Cranberry', 'Old Fashioned', 'Tequila Sunrise']
-        BarBot.drinks = []
+        BarBot.drinks = ['Margarita', 'Gin and Tonic', 'Vodka Cranberry', 'Old Fashioned', 'Tequila Sunrise']
+        #BarBot.drinks = []
         return UI()
 
 if __name__ == "__main__":

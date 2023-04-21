@@ -13,25 +13,23 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0c\x62\x61rbot.proto\"o\n\x0cOrderRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\x12\n\ndrink_name\x18\x02 \x01(\t\x12\x15\n\rcontainer_num\x18\x03 \x01(\x05\x12\x11\n\tamount_oz\x18\x04 \x01(\x01\x12\x10\n\x08stirring\x18\x05 \x01(\x08\"1\n\nOrderReply\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\x12\n\ndrink_name\x18\x02 \x01(\t\"H\n\rFlavorRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\x13\n\x0b\x66lavor_name\x18\x02 \x01(\t\x12\x11\n\tflavor_id\x18\x03 \x01(\x05\"3\n\x0b\x46lavorReply\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\x13\n\x0b\x66lavor_name\x18\x02 \x01(\t\"$\n\x0cLevelRequest\x12\x14\n\x0c\x63ontainer_id\x18\x01 \x01(\x05\";\n\nLevelReply\x12\x14\n\x0c\x63ontainer_id\x18\x01 \x01(\x05\x12\x17\n\x0f\x63ontainer_level\x18\x02 \x01(\x01\x32\x91\x01\n\x06\x42\x61rbot\x12*\n\nPlaceOrder\x12\r.OrderRequest\x1a\x0b.OrderReply\"\x00\x12.\n\x0cInjectFlavor\x12\x0e.FlavorRequest\x1a\x0c.FlavorReply\"\x00\x12+\n\x0bQueryLevels\x12\r.LevelRequest\x1a\x0b.LevelReply\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0c\x62\x61rbot.proto\"5\n\nOrderTuple\x12\x14\n\x0c\x63ontainer_id\x18\x01 \x01(\x05\x12\x11\n\tamount_oz\x18\x02 \x01(\x01\"\x83\x01\n\x0cOrderRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\x12\n\ndrink_name\x18\x02 \x01(\t\x12&\n\x11\x63ontainer_amounts\x18\x03 \x03(\x0b\x32\x0b.OrderTuple\x12\x13\n\x0b\x66lavor_name\x18\x04 \x01(\t\x12\x11\n\tflavor_id\x18\x05 \x01(\x05\"F\n\nOrderReply\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\x12\n\ndrink_name\x18\x02 \x01(\t\x12\x13\n\x0b\x66lavor_name\x18\x03 \x01(\t\"\x1f\n\x0c\x43leanRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\t\"\x1d\n\nCleanReply\x12\x0f\n\x07user_id\x18\x01 \x01(\t2a\n\x06\x42\x61rbot\x12*\n\nPlaceOrder\x12\r.OrderRequest\x1a\x0b.OrderReply\"\x00\x12+\n\x0b\x43leanSystem\x12\r.CleanRequest\x1a\x0b.CleanReply\"\x00\x62\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'barbot_pb2', globals())
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _ORDERREQUEST._serialized_start=16
-  _ORDERREQUEST._serialized_end=127
-  _ORDERREPLY._serialized_start=129
-  _ORDERREPLY._serialized_end=178
-  _FLAVORREQUEST._serialized_start=180
-  _FLAVORREQUEST._serialized_end=252
-  _FLAVORREPLY._serialized_start=254
-  _FLAVORREPLY._serialized_end=305
-  _LEVELREQUEST._serialized_start=307
-  _LEVELREQUEST._serialized_end=343
-  _LEVELREPLY._serialized_start=345
-  _LEVELREPLY._serialized_end=404
-  _BARBOT._serialized_start=407
-  _BARBOT._serialized_end=552
+  _ORDERTUPLE._serialized_start=16
+  _ORDERTUPLE._serialized_end=69
+  _ORDERREQUEST._serialized_start=72
+  _ORDERREQUEST._serialized_end=203
+  _ORDERREPLY._serialized_start=205
+  _ORDERREPLY._serialized_end=275
+  _CLEANREQUEST._serialized_start=277
+  _CLEANREQUEST._serialized_end=308
+  _CLEANREPLY._serialized_start=310
+  _CLEANREPLY._serialized_end=339
+  _BARBOT._serialized_start=341
+  _BARBOT._serialized_end=438
 # @@protoc_insertion_point(module_scope)
