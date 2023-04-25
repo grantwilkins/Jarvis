@@ -29,5 +29,12 @@ def clean_system(user_id):
         response = stub.CleanSystem(barbot_pb2.CleanRequest(user_id=user_id))
     print("Client ack received: " + response.user_id + " ordered system clean")
 
+def system_check(user_id):
+    print("Will try to check system ...")
+    with grpc.insecure_channel(IP_ADDR + ':' + PORT) as channel:
+        stub = barbot_pb2_grpc.BarbotStub(channel)
+        response = stub.SystemCheck(barbot_pb2.SystemCheckRequest(user_id=user_id))
+    print("Client ack received: " + response.user_id + " ordered system check")
+
 if __name__ == '__main__':
     logging.basicConfig()

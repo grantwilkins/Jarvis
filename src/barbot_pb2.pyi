@@ -48,3 +48,15 @@ class OrderTuple(_message.Message):
     amount_oz: float
     container_id: int
     def __init__(self, container_id: _Optional[int] = ..., amount_oz: _Optional[float] = ...) -> None: ...
+
+class SystemCheckReply(_message.Message):
+    __slots__ = ["user_id"]
+    USER_ID_FIELD_NUMBER: _ClassVar[int]
+    user_id: str
+    def __init__(self, user_id: _Optional[str] = ...) -> None: ...
+
+class SystemCheckRequest(_message.Message):
+    __slots__ = ["user_id"]
+    USER_ID_FIELD_NUMBER: _ClassVar[int]
+    user_id: str
+    def __init__(self, user_id: _Optional[str] = ...) -> None: ...

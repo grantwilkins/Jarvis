@@ -25,6 +25,11 @@ class BarbotStub(object):
                 request_serializer=barbot__pb2.CleanRequest.SerializeToString,
                 response_deserializer=barbot__pb2.CleanReply.FromString,
                 )
+        self.SystemCheck = channel.unary_unary(
+                '/Barbot/SystemCheck',
+                request_serializer=barbot__pb2.SystemCheckRequest.SerializeToString,
+                response_deserializer=barbot__pb2.SystemCheckReply.FromString,
+                )
 
 
 class BarbotServicer(object):
@@ -44,6 +49,12 @@ class BarbotServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def SystemCheck(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_BarbotServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -56,6 +67,11 @@ def add_BarbotServicer_to_server(servicer, server):
                     servicer.CleanSystem,
                     request_deserializer=barbot__pb2.CleanRequest.FromString,
                     response_serializer=barbot__pb2.CleanReply.SerializeToString,
+            ),
+            'SystemCheck': grpc.unary_unary_rpc_method_handler(
+                    servicer.SystemCheck,
+                    request_deserializer=barbot__pb2.SystemCheckRequest.FromString,
+                    response_serializer=barbot__pb2.SystemCheckReply.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -99,5 +115,22 @@ class Barbot(object):
         return grpc.experimental.unary_unary(request, target, '/Barbot/CleanSystem',
             barbot__pb2.CleanRequest.SerializeToString,
             barbot__pb2.CleanReply.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def SystemCheck(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/Barbot/SystemCheck',
+            barbot__pb2.SystemCheckRequest.SerializeToString,
+            barbot__pb2.SystemCheckReply.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

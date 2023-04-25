@@ -5,7 +5,7 @@ sys.path.append('../device')
 import grpc
 import barbot_pb2_grpc
 import barbot_pb2
-#import pumping_system
+import pumping_system
 class Barbot(barbot_pb2_grpc.BarbotServicer):
 
     def PlaceOrder(self, request, context):
@@ -14,15 +14,20 @@ class Barbot(barbot_pb2_grpc.BarbotServicer):
         for i in range(len(request.container_amounts)):
             order_array.append((request.container_amounts[i].container_id, request.container_amounts[i].amount_oz))
             print("Pumping out " + str(request.container_amounts[i].amount_oz) + " oz from " + str(request.container_amounts[i].container_id))
-        #if(request.flavor_id != 0):
-            #pumping_system.flavor_out(flavor_num=request.flavor_id)
-        #pumping_system.pump_handler(order_array)
+        if(request.flavor_id != 0):
+            pumping_system.flavor_out(flavor_num=request.flavor_id)
+        pumping_system.pump_handler(order_array)
         return barbot_pb2.OrderReply(user_id=request.user_id, drink_name=request.drink_name, flavor_name=request.flavor_name)
 
     def CleanSystem(self, request, context):
         print("Received clean request from " + request.user_id)
-        #pumping_system.clean_system()
+        pumping_system.clean_system()
         return barbot_pb2.CleanReply(user_id=request.user_id)
+    
+    def SystemCheck(self, request, context):
+        print("Received system check request from " + request.user_id)
+        pumping_system.system_check()
+        return barbot_pb2.SystemCheckReply(user_id=request.user_id)
 
 def serve():
     port = '5005'
@@ -36,5 +41,5 @@ def serve():
 
 if __name__ == '__main__':
     logging.basicConfig()
-    #pumping_system.init_pumping_system()
+    pumping_system.init_pumping_system()
     serve()

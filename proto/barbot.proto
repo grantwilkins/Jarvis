@@ -6,6 +6,7 @@ service Barbot {
   // Sends a drink order
   rpc PlaceOrder (OrderRequest) returns (OrderReply) {}
   rpc CleanSystem (CleanRequest) returns (CleanReply) {}
+  rpc SystemCheck (SystemCheckRequest) returns (SystemCheckReply) {}
 }
 
 // Container number and amount requested data type
@@ -47,5 +48,13 @@ message CleanRequest {
 // The response message upon successful cleaning
 // 1. user_id: User that placed the order
 message CleanReply {
+  string user_id = 1;
+}
+
+message SystemCheckRequest {
+  string user_id = 1;
+}
+
+message SystemCheckReply {
   string user_id = 1;
 }

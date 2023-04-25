@@ -37,6 +37,9 @@ ORDER_ARR = []
 class AdminMenu(Screen):
     def clean(self):
         bbc.clean_system("admin")
+    
+    def system_check(self):
+        bbc.system_check("admin")
     pass
 
 class LevelMenu(Screen):

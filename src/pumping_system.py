@@ -4,7 +4,7 @@ import threading
 
 # Format: {container_num : gpio pin}
 CONTAINER_PINS = {1 : 19, 2 : 11, 3 : 22, 4 : 27, 5 : 12, 6 : 1}
-STIR_PIN = 7
+STIR_PIN = 25
 STIR_TIME = 4 # seconds
 CLEAN_PIN = 4
 CLEAN_TIME = 4 # seconds
@@ -15,6 +15,8 @@ FLAVOR_TIME = 0.3 # seconds
 
 FLOW_RATE = 1.0 # oz/sec
 
+CUP_DETECT_PIN = 2
+
 '''
 Initialize our pumping system
 '''
@@ -22,6 +24,18 @@ def init_pumping_system():
 	GPIO.setmode(GPIO.BCM)
 	for i in range(27):
 		GPIO.setup(i, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+	GPIO.setup(8,GPIO.OUT)
+	GPIO.output(8,GPIO.HIGH)
+
+
+def system_check():
+	GPIO.setup(8,GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+	GPIO.setup(7,GPIO.OUT)
+	GPIO.output(7,GPIO.HIGH)
+	sleep(5)
+	GPIO.setup(7,GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+	GPIO.setup(8,GPIO.OUT)
+	GPIO.output(8,GPIO.HIGH)
 
 '''
 Externally called by the drink server. Will fill in a flavor object which
@@ -51,6 +65,8 @@ def clean_system():
 
 # This is the server's main function. It will pump out the drink
 def pump_handler(order_array):
+	if(not detect_cup()):
+		return 1
 	threads = []
 	order_time = 0
 	for order in order_array:
@@ -82,6 +98,8 @@ def drain(order_time):
 	GPIO.setup(DRAIN_PIN,GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 	GPIO.setup(6,GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 	GPIO.setup(5,GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+	GPIO.setup(8,GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+	GPIO.output(8,GPIO.HIGH)
 
 # This is a helper function for pump_handler to pump out a drink
 def pump_out(container_num, ounces_requested):
@@ -90,3 +108,10 @@ def pump_out(container_num, ounces_requested):
 	sleep(time_on)
 	GPIO.setup(CONTAINER_PINS[container_num],GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 	return 0
+
+# This is a helper function for pump_handler to detect a cup
+def detect_cup():
+	if GPIO.input(CUP_DETECT_PIN):
+		return True
+	else:
+		return False
